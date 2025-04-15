@@ -875,6 +875,14 @@ func indexOidsAsString(indexOids []int, typ string, fixedSize int, implied bool,
 			parts[i] = fmt.Sprintf("%02X", o)
 		}
 		return strings.Join(parts, ":"), subOid, indexOids
+        case "LongString":
+                length := len(indexOids)
+                subOid, indexOids := splitOid(indexOids, length)
+                parts := make([]string, length)
+                for i, o := range subOid {
+                        parts[i] = strconv.Itoa(o)
+                }
+                return strings.Join(parts, "."), subOid, indexOids
 	case "OctetString":
 		var subOid []int
 		// The length of fixed size indexes come from the MIB.
