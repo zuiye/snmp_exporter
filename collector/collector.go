@@ -875,22 +875,16 @@ func indexOidsAsString(indexOids []int, typ string, fixedSize int, implied bool,
 			parts[i] = fmt.Sprintf("%02X", o)
 		}
 		return strings.Join(parts, ":"), subOid, indexOids
-        case "LongString":
-                length := len(indexOids)
-                subOid, indexOids := splitOid(indexOids, length)
-                parts := make([]string, length)
-                for i, o := range subOid {
-                        parts[i] = strconv.Itoa(o)
-                }
-                return strings.Join(parts, "."), subOid, indexOids
+
 	// 新加LongString 所有的长度
 	case "LongString":
 		length := len(indexOids)
-		subOid, indexOids := splitOid(indexOids, length)
+		subOid, _ := splitOid(indexOids, length)
 		parts := make([]string, length)
 		for i, o := range subOid {
-				parts[i] = strconv.Itoa(o)
+			parts[i] = strconv.Itoa(o)
 		}
+
 		return strings.Join(parts, "."), subOid, strings.Join(parts, ".")
 	case "OctetString":
 		var subOid []int
